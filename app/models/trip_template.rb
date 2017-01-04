@@ -1,0 +1,2 @@
+class TripTemplate < ApplicationRecord
+end
