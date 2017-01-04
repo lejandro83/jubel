@@ -1,0 +1,91 @@
+version: "2"
+
+volumes:
+  redis:
+    driver: local
+  gems:
+    driver: local
+  postgres-data:
+    driver: local
+services:
+  # redis:
+  #   image: redis:3.2.0
+  #   ports:
+  #     - 6379:6379
+  #   command: redis-server --appendonly yes
+  #   volumes:
+  #     - redis:/var/lib/redis
+  db:
+    image: mdillon/postgis
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 12341234
+  # sidekiq:
+  #   image: icalialabs/okudoc:development
+  #   links:
+  #     - 'db'
+  #     - 'redis'
+  #   build:
+  #     context: .
+  #     dockerfile: dev.Dockerfile
+  #   working_dir: /usr/src/okudoc_api
+  #   command: bundle exec sidekiq -c 3 -q default
+  #   volumes:
+  #     - .:/usr/src/okudoc_api
+  #     - gems:/usr/local/bundle
+  #   environment:
+  #     REDIS_URL: redis://redis:6379
+  #     DATABASE_URL: postgis://postgres:12341234@db:5432/okudoc_api_db_development?pool=25&encoding=unicode&schema_search_path=public
+  #   env_file:
+  #     - development.env
+  web:
+    image: icalialabs/okudoc:development
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    command: rails s -b 0.0.0.0
+    ports:
+      - 3000:3000
+      - 1025:1025
+      - 1080:1080
+    expose:
+      - 1025/smtp
+      - 1080
+    volumes:
+      - .:/usr/src/okudoc_api
+      - gems:/usr/local/bundle
+    working_dir: /usr/src/okudoc_api
+    tty: true
+    stdin_open: true
+    links:
+      - db
+      - redis
+      - sidekiq
+    environment:
+      REDIS_URL: redis://redis:6379
+      DATABASE_URL: postgis://postgres:12341234@db:5432/okudoc_api_db_development?pool=25&encoding=unicode&schema_search_path=public
+      CODECLIMATE_REPO_TOKEN: 6e582d354d6bc9d95de626a72314702ccebeeac0ab249665a10327eb3d24a59b
+    env_file:
+      - development.env
+  test:
+    image: icalialabs/okudoc:development
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - .:/usr/src/okudoc_api
+      - gems:/usr/local/bundle
+    working_dir: /usr/src/okudoc_api
+    links:
+      - db
+      - redis
+      - sidekiq
+    environment:
+      REDIS_URL: redis://redis:6379
+      # Override the app environment for this container:
+      DATABASE_URL: postgis://postgres:12341234@db:5432/okudoc_testing?pool=25&encoding=unicode&schema_search_path=public
+      RACK_ENV: test
+      RAILS_ENV: test
