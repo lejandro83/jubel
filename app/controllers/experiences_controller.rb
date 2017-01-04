@@ -1,8 +1,8 @@
 class ExperiencesController < ApplicationController
 
   def index
-    @experience = Experience.all
-    render json: @experience
+    @experiences = Experience.all
+    render json: @experiences
   end
 
   def show
