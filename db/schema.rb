@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170104220605) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "experiences", force: :cascade do |t|
     t.string   "name"
     t.string   "path"
@@ -90,9 +93,9 @@ ActiveRecord::Schema.define(version: 20170104220605) do
   end
 
   create_table "trip_templates", force: :cascade do |t|
-    t.integer  "items"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "items",      default: [],              array: true
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "trips", force: :cascade do |t|
@@ -104,9 +107,9 @@ ActiveRecord::Schema.define(version: 20170104220605) do
     t.decimal  "total_due",        precision: 8, scale: 2
     t.boolean  "split_account"
     t.integer  "experience_id"
-    t.integer  "itinerary"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.integer  "itinerary",                                default: [],              array: true
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -122,8 +125,8 @@ ActiveRecord::Schema.define(version: 20170104220605) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
 end
