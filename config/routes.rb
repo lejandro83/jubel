@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :experiences
   resources :items
-  resources :trips
   resources :guests
   resources :itineraries, except: [:index]
   resources :trip_templates
