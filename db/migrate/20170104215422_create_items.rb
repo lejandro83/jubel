@@ -9,7 +9,7 @@ class CreateItems < ActiveRecord::Migration[5.0]
       t.decimal :longitude, precision:9,scale:6
       t.string :address
       t.string :phone
-      t.integer :type_id
+      t.integer :item_type
       t.string :image_url
       t.string :budget
 

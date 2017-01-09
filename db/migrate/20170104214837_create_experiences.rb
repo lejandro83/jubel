@@ -15,7 +15,7 @@ class CreateExperiences < ActiveRecord::Migration[5.0]
       t.integer :itinerary, array:true, default: []
       t.decimal :budget, precision: 8 , scale:2
       t.string :keyword
-      t.integer :status_id
+      t.integer :status
       t.integer :guests, default:[] , array: true
       t.string :log_notes
       t.string :transportation_notes

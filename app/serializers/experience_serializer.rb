@@ -8,7 +8,8 @@ class ExperienceSerializer < ActiveModel::Serializer
               :season,
               :budget,
               :keyword,
-              :status_id,
+              :status,
+              :client,
               :guests,
               :itinerary_detail,
               :log_notes,
@@ -16,15 +17,16 @@ class ExperienceSerializer < ActiveModel::Serializer
               :accomodation_notes
 
   def itinerary_detail
-    
     ActiveModel::Serializer::CollectionSerializer.new(self.object.itineraries)
-    
     # @activities = Array.new
     # itinerary.each do |activity|
     #   @activities << Itinerary.find(activity)
     # end
     # # @activities
-    
+  end
+
+  def client
+    ActiveModel::Serializer::CollectionSerializer.new(self.object.client)    
   end
 
 end

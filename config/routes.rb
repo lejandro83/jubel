@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
+  root 'experiences#home'
   devise_for :users
+  resources :users
   resources :experiences
   resources :items
   resources :guests

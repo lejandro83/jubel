@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20170104220605) do
     t.integer  "itinerary",                                    default: [],              array: true
     t.decimal  "budget",               precision: 8, scale: 2
     t.string   "keyword"
-    t.integer  "status_id"
+    t.integer  "status"
     t.integer  "guests",                                       default: [],              array: true
     t.string   "log_notes"
     t.string   "transportation_notes"
@@ -54,12 +54,6 @@ ActiveRecord::Schema.define(version: 20170104220605) do
     t.datetime "updated_at",                           null: false
   end
 
-  create_table "item_types", force: :cascade do |t|
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
   create_table "items", force: :cascade do |t|
     t.string   "name"
     t.integer  "continent_id"
@@ -69,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170104220605) do
     t.decimal  "longitude",    precision: 9, scale: 6
     t.string   "address"
     t.string   "phone"
-    t.integer  "type_id"
+    t.integer  "item_type"
     t.string   "image_url"
     t.string   "budget"
     t.datetime "created_at",                           null: false
@@ -90,12 +84,6 @@ ActiveRecord::Schema.define(version: 20170104220605) do
     t.datetime "updated_at",                               null: false
   end
 
-  create_table "statuses", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "trip_templates", force: :cascade do |t|
     t.integer  "items",      default: [],              array: true
     t.datetime "created_at",              null: false
@@ -104,6 +92,8 @@ ActiveRecord::Schema.define(version: 20170104220605) do
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
+    t.string   "first_name",             default: ""
+    t.string   "last_name",              default: ""
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

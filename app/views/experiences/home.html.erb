@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>jubel</title>
+  </head>
+  <body>
+    <% if user_signed_in? %>
+      <li><%= link_to 'Log Out', destroy_user_session_path, method: :delete %></li>
+    <% else %>
+      <li><a href="/users/sign_in">Already have an account? <em style="color:blue;">Login</em></a></li>
+      <li><a href="/users/sign_up"><em style="color:blue;">Signup!</em></a></li>
+    <% end %>
+  </body>
+</html>
