@@ -1,16 +1,18 @@
 class ExperiencesController < ApplicationController
   before_action :authenticate_user!, :define_user
+  respond_to :html, :json
 
   def index
     filtering_params(params).each do |key, value|
       @experiences = @experiences.public_send(key, value) if value.present?
     end
-    render json: @experiences, each_serializer: SimpleExperienceSerializer
+    respond_with(@experiences)
+
   end
 
   def show
     @experience = Experience.find(params[:id])
-    render json: @experience
+    respond_with(@experience)
   end
 
   def update
@@ -22,7 +24,7 @@ class ExperiencesController < ApplicationController
   end
 
   def home
-    
+
   end
 
 
@@ -37,12 +39,12 @@ class ExperiencesController < ApplicationController
 
   private
 
-    def filtering_params(params)
-      params.slice(
-        :by_name,
-        :by_status
-        # :group_id, :log_notes, :transportation_notes, :accomodation_notes, :path, :name , :continent_id, :country_id, :season, :budget, :keyword,
-      )
-    end
+  def filtering_params(params)
+    params.slice(
+      :by_name,
+      :by_status
+      # :group_id, :log_notes, :transportation_notes, :accomodation_notes, :path, :name , :continent_id, :country_id, :season, :budget, :keyword,
+    )
+  end
 
 end
