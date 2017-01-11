@@ -8,7 +8,7 @@ class SimpleExperienceSerializer < ActiveModel::Serializer
               :budget,
               :keyword,
               :status,
-              :simple_client
+              :client
 
   def simple_client
     SimpleClientSerializer.new(object.client)
