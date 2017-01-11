@@ -1,7 +1,6 @@
 class ExperienceSerializer < ActiveModel::Serializer
   attributes :id,
               :path,
-              :path, 
               :name , 
               :continent_id, 
               :country_id,
@@ -17,7 +16,7 @@ class ExperienceSerializer < ActiveModel::Serializer
               :accomodation_notes
 
   def itinerary_detail
-    ActiveModel::Serializer::CollectionSerializer.new(self.object.itineraries)
+    ActiveModel::Serializer::CollectionSerializer.new(object.itineraries)
     # @activities = Array.new
     # itinerary.each do |activity|
     #   @activities << Itinerary.find(activity)
@@ -26,7 +25,7 @@ class ExperienceSerializer < ActiveModel::Serializer
   end
 
   def client
-    ActiveModel::Serializer::CollectionSerializer.new(self.object.client)    
+    ActiveModel::Serializer::CollectionSerializer.new(object.client)    
   end
 
 end

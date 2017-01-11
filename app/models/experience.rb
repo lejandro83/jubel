@@ -12,12 +12,13 @@ class Experience < ApplicationRecord
   # scope :by_name, -> (name) { where('name ILIKE ?', "%#{name}%") }
 
   def itineraries
-    @itineraries ||= Itinerary.where(id: itinerary)
+    @itineraries ||= Itinerary.where(id: itinerary).first
     @itineraries
   end
 
   def client
-    @client ||= User.where(id: user_id)
+    @client ||= User.where(id: user_id).first
     @client
   end
+
 end

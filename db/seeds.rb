@@ -14,4 +14,5 @@ user2 = User.create(:email => 'test2@example.com', :password => 'password', :pas
 user3 = User.create(:email => 'admin@example.com', :password => 'password', :password_confirmation => 'password', phone: "1231231", user_type: 0, first_name: "Root", last_name: "God")
 experience = Experience.create(path: "Active Nature", name: "Mayas", number_of_guests: 1, user_id: 1, budget: 7000.00, itinerary: [1,2], status: 3)
 experience2 = Experience.create(path: "Peace and Quiet", name: "Extreme Shit", number_of_guests: 2, user_id: 2, budget: 300.00, itinerary: [2], status: 0)
-
+best_practices = BestPractice.create(region: 1, general_knowledge: "Watchout bro!", personal_safety: "Not Safe Bro!", driving_conditions: "Drive MFckr", tipping_and_money: "$$$$", description:"Shalalal")
+best_practices2 = BestPractice.create(region: 2, general_knowledge: "Los Hack Amigos!", personal_safety: "This is fine!", driving_conditions: "McDrive Trough", tipping_and_money: "$$", description:"Let's Go!")

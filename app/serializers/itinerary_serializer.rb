@@ -1,7 +1,7 @@
 class ItinerarySerializer < ActiveModel::Serializer
   attributes :id,
               :date,
-              :item_id,
+              :activity,
               :time_start,
               :time_end,
               :price,

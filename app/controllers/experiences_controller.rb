@@ -5,7 +5,7 @@ class ExperiencesController < ApplicationController
     filtering_params(params).each do |key, value|
       @experiences = @experiences.public_send(key, value) if value.present?
     end
-    render json: @experiences
+    render json: @experiences, each_serializer: SimpleExperienceSerializer
   end
 
   def show
