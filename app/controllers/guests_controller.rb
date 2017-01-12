@@ -1,7 +1,6 @@
 class GuestsController < ApplicationController
+
   def index
-    @guests = Trip.all
-    render json: @guests
   end
 
   def show

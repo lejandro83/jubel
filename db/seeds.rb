@@ -16,3 +16,4 @@ experience = Experience.create(path: "Active Nature", name: "Mayas", number_of_g
 experience2 = Experience.create(path: "Peace and Quiet", name: "Extreme Shit", number_of_guests: 2, user_id: 2, budget: 300.00, itinerary: [2], status: 0)
 trip_template = TripTemplate.create(items: [item1.id,item2.id])
 trip_template2 = TripTemplate.create()
+guest = Guest.create(name: "Jorge")
