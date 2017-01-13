@@ -1,16 +1,22 @@
 class ExperiencesController < ApplicationController
-  before_action :authenticate_user!, :define_user
+  before_action :authenticate_user!
+  respond_to :html, :json
 
   def index
+    @experiences = Experience.all if current_user.user_type?('unlimited')
+    @experiences = Experience.where(user_id: current_user.id) if !current_user.user_type?('unlimited')
+    
     filtering_params(params).each do |key, value|
       @experiences = @experiences.public_send(key, value) if value.present?
     end
-    render json: @experiences, each_serializer: SimpleExperienceSerializer
+    
+     respond_with(@experiences, each_serializer: SimpleExperienceSerializer)
   end
 
   def show
-    @experience = Experience.find(params[:id])
-    render json: @experience
+    @experience = Experience.find(params[:id]) if current_user.user_type?('unlimited')
+    @experience = Experience.where(id: params[:id], user_id: current_user.id) if !current_user.user_type?('unlimited')
+    respond_with(@experience)
   end
 
   def update
@@ -25,15 +31,14 @@ class ExperiencesController < ApplicationController
     
   end
 
-
-  def define_user
-    if current_user.user_type?('unlimited')
-      @experiences = Experience.all
-    else
-      @experiences = Experience.find(current_user.id)
-    end
-    @experiences 
-  end
+  # def define_user
+  #   if current_user.user_type?('unlimited')
+  #     @experiences = Experience.all
+  #   else
+  #     @experiences = Experience.where(status: :new_experience, user_id: current_user.id)
+  #   end
+  #   @experiences 
+  # end
 
   private
 
